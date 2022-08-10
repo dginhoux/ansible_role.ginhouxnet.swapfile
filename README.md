@@ -1,4 +1,4 @@
-ginhouxnet.sysctl
+ginhouxnet.swapfile
 =========
 
 This ansible role simply create a swapfile and enable it ; it can also disable and remove it.
