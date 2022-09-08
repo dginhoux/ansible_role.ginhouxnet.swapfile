@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: ginhouxnet.swapfile
+  role_name: swapfile
   description: configure swapfile
   author: dginhoux
   company: ginhouxnet
