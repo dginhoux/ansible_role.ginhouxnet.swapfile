@@ -14,8 +14,7 @@ This role is built to only run on platforms defined in `meta/main.yml`
 Role Variables
 --------------
 
-
-```
+```yaml
 swap_file_path: /swapfile
 swap_file_size_mb: '2048'
 
