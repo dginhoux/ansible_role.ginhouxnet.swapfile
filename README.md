@@ -14,7 +14,6 @@ This role is built to only run on platforms defined in `meta/main.yml`
 Role Variables
 --------------
 
-It's just a simple list like : 
 
 ```
 swap_file_path: /swapfile
@@ -28,6 +27,7 @@ Dependencies
 ------------
 
 none
+
 
 Example Playbook
 ----------------
