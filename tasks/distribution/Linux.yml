@@ -9,34 +9,34 @@
 
 - block:
     - name: disable swap
-      command: swapoff -a
+      ansible.builtin.command: swapoff -a
 
     - name: remove swapfile
-      file:
+      ansible.builtin.file:
         path: "{{ swap_file_path }}"
         state: absent
   when: swap_file_state == "absent"
 
 - block:
     - name: create swapfile
-      command: >
+      ansible.builtin.command: >
         {{ swap_file_create_command }}
         creates='{{ swap_file_path }}'
       register: swap_file_create
 
     - name: set permissions on swapfile
-      file:
+      ansible.builtin.file:
         path: "{{ swap_file_path }}"
         owner: root
         group: root
         mode: 0600
 
     - name: make swap with swapfile
-      command: mkswap {{ swap_file_path }}
+      ansible.builtin.command: mkswap {{ swap_file_path }}
       when: swap_file_create is changed
       register: mkswap_result
 
     - name: enable swapon on swapfile
-      command: swapon {{ swap_file_path }}
+      ansible.builtin.command: swapon {{ swap_file_path }}
       when: mkswap_result is changed
   when: swap_file_state == "present"
