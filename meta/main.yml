@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   role_name: swapfile
-  description: configure swapfile
+  description: dginhoux.swapfile
   author: Dany GINHOUX
   company: dginhoux
   license: MIT
