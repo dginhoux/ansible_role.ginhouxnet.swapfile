@@ -4,7 +4,7 @@
 
 ## DESCRIPTION
 
-This ansible role simply create a swapfile and enable it ; it can also disable and remove it.<br />
+This ansible role create a swapfile and enable it ; it can also disable and remove it.<br />
 There no way to expand an existing swapfile, it must be disabled and removed, before be recreated at the new size.
 
 

@@ -1,7 +1,8 @@
 ---
 galaxy_info:
   role_name: swapfile
-  description: dginhoux.swapfile
+  description: |
+    This ansible role create a swapfile and enable it ; it can also disable and remove it.
   author: Dany GINHOUX
   company: dginhoux
   license: MIT
