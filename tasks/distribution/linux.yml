@@ -1,42 +1,47 @@
 ---
-- name: manage swap file entry in fstab
-  mount:
+- name: Manage swap file entry in fstab
+  ansible.builtin.mount:
     name: none
     src: "{{ swap_file_path }}"
     fstype: swap
     opts: sw
     state: "{{ swap_file_state }}"
 
-- block:
-    - name: disable swap
-      ansible.builtin.command: swapoff -a
 
-    - name: remove swapfile
+- name: Remove swapfile
+  when: swap_file_state == "absent"
+  block:
+    - name: Disable swap
+      ansible.builtin.shell:
+        cmd: swapoff -a
+
+    - name: Remove swapfile
       ansible.builtin.file:
         path: "{{ swap_file_path }}"
         state: absent
-  when: swap_file_state == "absent"
 
-- block:
-    - name: create swapfile
-      ansible.builtin.command: >
-        {{ swap_file_create_command }}
-        creates='{{ swap_file_path }}'
+- name: Create swapfile
+  when: swap_file_state == "present"
+  block:
+    - name: Create swapfile
+      ansible.builtin.shell:
+        cmd: "{{ swap_file_create_command }} creates='{{ swap_file_path }}'"
       register: swap_file_create
 
-    - name: set permissions on swapfile
+    - name: Set permissions on swapfile
       ansible.builtin.file:
         path: "{{ swap_file_path }}"
         owner: root
         group: root
-        mode: 0600
+        mode: "0600"
 
-    - name: make swap with swapfile
-      ansible.builtin.command: mkswap {{ swap_file_path }}
+    - name: Make swap with swapfile
+      ansible.builtin.shell:
+        cmd: mkswap {{ swap_file_path }}
       when: swap_file_create is changed
       register: mkswap_result
 
-    - name: enable swapon on swapfile
-      ansible.builtin.command: swapon {{ swap_file_path }}
+    - name: Enable swapon on swapfile
+      ansible.builtin.command:
+        cmd: swapon {{ swap_file_path }}
       when: mkswap_result is changed
-  when: swap_file_state == "present"
