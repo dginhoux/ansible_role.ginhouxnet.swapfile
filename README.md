@@ -21,7 +21,7 @@ This behaviour can be bypassed by settings the following variable `asserts_bypas
 | Platform | Versions |
 |----------|----------|
 | Debian | buster, bullseye |
-| Fedora | 33, 34, 35, 36 |
+| Fedora | 33, 34, 35, 36, 37 |
 | EL | 7, 8 |
 
 #### ANSIBLE VERSION
@@ -72,8 +72,6 @@ swap_file_path: /swapfile
 swap_file_size_mb: '2048'
 
 swap_file_state: present
-
-swap_file_create_command: "dd if=/dev/zero of={{ swap_file_path }} bs=1M count={{ swap_file_size_mb }}"
 ```
 
 #### DEFAULT OS SPECIFIC VARIABLES

@@ -20,12 +20,12 @@
         path: "{{ swap_file_path }}"
         state: absent
 
-- name: Create swapfile
+- name: Create swapfile 
   when: swap_file_state == "present"
   block:
-    - name: Create swapfile
+    - name: "Create swapfile {{ swap_file_size_mb }}"
       ansible.builtin.shell:
-        cmd: "{{ swap_file_create_command }} creates='{{ swap_file_path }}'"
+        cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1M count={{ swap_file_size_mb }}"
       register: swap_file_create
 
     - name: Set permissions on swapfile
