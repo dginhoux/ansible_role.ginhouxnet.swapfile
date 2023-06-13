@@ -24,10 +24,10 @@
   when: swap_file_state == "present"
   block:
     - name: "Create swapfile {{ swap_file_size_mb }}"
-      ansible.builtin.shell:
-        cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1M count={{ swap_file_size_mb }}"
       register: swap_file_create
 
+      ansible.builtin.shell:
+        cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1M count={{ swap_file_size_mb }}"
     - name: Set permissions on swapfile
       ansible.builtin.file:
         path: "{{ swap_file_path }}"
@@ -36,12 +36,12 @@
         mode: "0600"
 
     - name: Make swap with swapfile
-      ansible.builtin.shell:
-        cmd: mkswap {{ swap_file_path }}
       when: swap_file_create is changed
       register: mkswap_result
+      ansible.builtin.shell:
+        cmd: mkswap {{ swap_file_path }}
 
     - name: Enable swapon on swapfile
+      when: mkswap_result is changed
       ansible.builtin.command:
         cmd: swapon {{ swap_file_path }}
-      when: mkswap_result is changed
