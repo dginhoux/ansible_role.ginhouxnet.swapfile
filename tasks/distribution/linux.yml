@@ -1,5 +1,6 @@
 ---
 - name: Manage swap file entry in fstab
+  become: true
   ansible.posix.mount:
     fstype: swap
     name: none
@@ -13,10 +14,12 @@
     - swap_file_state == "absent"
   block:
     - name: Disable swap
+      become: true
       ansible.builtin.command:
         cmd: swapoff -a
 
     - name: Remove swapfile
+      become: true
       ansible.builtin.file:
         path: "{{ swap_file_path }}"
         state: absent
@@ -27,11 +30,13 @@
     - swap_file_state == "present"
   block:
     - name: "Create swapfile {{ swap_file_size_mb }}"
+      become: true
       # register: swap_file_create
       ansible.builtin.command:
         cmd: "dd if=/dev/zero of={{ swap_file_path }} bs=1M count={{ swap_file_size_mb }}"
 
     - name: Set permissions on swapfile
+      become: true
       ansible.builtin.file:
         path: "{{ swap_file_path }}"
         owner: root
@@ -39,12 +44,14 @@
         mode: "0600"
 
     - name: Make swap with swapfile
+      become: true
       # when: swap_file_create is changed
       register: mkswap_result
       ansible.builtin.command:
         cmd: mkswap {{ swap_file_path }}
 
     - name: Enable swapon on swapfile
+      become: true
       # when: mkswap_result is changed
       ansible.builtin.command:
         cmd: swapon {{ swap_file_path }}
