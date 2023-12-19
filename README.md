@@ -50,9 +50,10 @@ git clone https://github.com/dginhoux/ansible_role.swapfile dginhoux.swapfile
 #### EXAMPLE PLAYBOOK
 
 ```yaml
-- hosts: all
+- name: Playbook
+  hosts: all
   roles:
-    - name: start role dginhoux.swapfile
+    - name: Start role dginhoux.swapfile
       ansible.builtin.include_role:
         name: dginhoux.swapfile
 ```
