@@ -52,7 +52,7 @@ git clone https://github.com/dginhoux/ansible_role.swapfile dginhoux.swapfile
 ```yaml
 - name: Playbook
   hosts: all
-  roles:
+  tasks:
     - name: Start role dginhoux.swapfile
       ansible.builtin.include_role:
         name: dginhoux.swapfile
@@ -63,7 +63,10 @@ git clone https://github.com/dginhoux/ansible_role.swapfile dginhoux.swapfile
 
 #### DEFAULT VARIABLES
 
-Defaults variables defined in `defaults/main.yml` : 
+Defaults variables defined in `defaults/main.yml`
+
+#### EXAMPLES VARIABLES
+
 
 ```yaml
 swap_file_path: /swapfile
